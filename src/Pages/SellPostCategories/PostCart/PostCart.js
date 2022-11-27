@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PostCart = ({ post }) => {
+const PostCart = ({ post, setModalPost }) => {
     const { location, modelName, orginalPrice, picture, postTime, resalePrice, sellerName, yearOfUse } = post;
     return (
         <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
@@ -37,8 +37,10 @@ const PostCart = ({ post }) => {
                         </div>
                     </div>
                 </div>
-                <button className="w-full px-5 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mx-2 sm:order-2 sm:w-auto hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Book Now</button>
+                <label htmlFor="Book-modal" className="border-none btn mt-5 w-full  text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mx-2 sm:order-2 sm:w-auto hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" onClick={() => setModalPost(post)}>Book Now</label>
             </div>
+
+
         </div>
     );
 };

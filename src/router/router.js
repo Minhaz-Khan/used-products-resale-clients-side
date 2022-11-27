@@ -1,7 +1,12 @@
+import DashboardLayout from "../Layout/DashboardLayout";
+import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
+import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
 import Home from "../Pages/Home/Home/Home";
 import SellPostCategorie from "../Pages/SellPostCategories/SellPostCategorie/SellPostCategorie";
 import Login from "../Pages/User/Login/Login";
 import SignUp from "../Pages/User/SignUp/SignUp";
+import AdminRoute from "../PrivetRoutes/AdminRoute";
+import PrivetRoute from "../PrivetRoutes/PrivetRoute";
 
 
 const { createBrowserRouter } = require("react-router-dom");
@@ -18,8 +23,12 @@ const router = createBrowserRouter([
             },
             {
                 path: '/sellpostcategorie/:id',
-                element: <SellPostCategorie></SellPostCategorie>,
-                loader: ({ params }) => fetch(`http://localhost:5000/carspost/${params.id}`)
+                element: <PrivetRoute><SellPostCategorie></SellPostCategorie></PrivetRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/carspost/${params.id}`, {
+                    headers: {
+                        authorization: `baerer ${localStorage.getItem('accessToken')}`
+                    }
+                })
             },
             {
                 path: '/login',
@@ -28,6 +37,20 @@ const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <SignUp></SignUp>
+            }
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <AdminRoute><DashboardLayout></DashboardLayout></AdminRoute>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <AdminRoute><MyOrders></MyOrders></AdminRoute>
+            },
+            {
+                path: '/dashboard/addproduc',
+                element: <AdminRoute><AddProduct></AddProduct></AdminRoute>
             }
         ]
     }
