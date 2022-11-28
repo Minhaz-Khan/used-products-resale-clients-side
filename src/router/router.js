@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { authContext } from "../Context/AuthProvider";
-import useUserType from "../Hooks/useUserType";
 import DashboardLayout from "../Layout/DashboardLayout";
 import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
+import MyProduct from "../Pages/Dashboard/MyProduct/MyProduct";
 import Home from "../Pages/Home/Home/Home";
 import SellPostCategorie from "../Pages/SellPostCategories/SellPostCategorie/SellPostCategorie";
 import Login from "../Pages/User/Login/Login";
@@ -54,6 +52,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/addproduct',
                 element: <AdminRoute><AddProduct></AddProduct></AdminRoute>
+            },
+            {
+                path: '/dashboard/myproduct',
+                element: <AdminRoute><MyProduct></MyProduct></AdminRoute>
             }
         ]
     }

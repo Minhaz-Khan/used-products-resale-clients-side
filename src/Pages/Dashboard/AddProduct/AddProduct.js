@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { ColorRing } from 'react-loader-spinner';
+import Swal from 'sweetalert2';
+import { authContext } from '../../../Context/AuthProvider';
 
 const AddProduct = () => {
     const { register, handleSubmit } = useForm();
+    const { user } = useContext(authContext);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleAddProduct = (data) => {
-
+        setIsLoading(true)
+        const categories = data.categories;
+        let categoriesId = '637fb46afa57a50d5111e4ff';
+        if (categories === 'Audi') {
+            categoriesId = '637fb46afa57a50d5111e500'
+        }
+        else if (categories === 'Mercedes') {
+            categoriesId = '637fb46afa57a50d5111e501'
+        }
+        const postData = new Date().toLocaleDateString()
         const image = data.productImage[0];
         const formdata = new FormData();
         formdata.append('image', image)
@@ -14,7 +28,51 @@ const AddProduct = () => {
             body: formdata,
         })
             .then(res => res.json())
-            .then(data => console.log(data.data.url))
+            .then(imagedata => {
+                console.log(imagedata.data.url)
+                if (imagedata.success) {
+                    const picture = imagedata.data.url;
+                    const product = {
+                        sellerName: user.displayName,
+                        sellerEmail: user.email,
+                        picture,
+                        location: data.location,
+                        resalePrice: data.resalePrice,
+                        orginalPrice: data.orginalPrice,
+                        yearOfUse: data.yearOfUse,
+                        postTime: postData,
+                        modelName: data.modelName,
+                        categoriesId,
+                        categories,
+                        discription: data.discription,
+                        condition: data.conditionType,
+                    }
+                    console.log(product);
+
+                    fetch(`http://localhost:5000/addProduct?email=${user.email}`, {
+                        method: "POST",
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `baerer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(product)
+                    })
+                        .then(res => res.json())
+                        .then(addData => {
+                            console.log(addData)
+                            if (addData.acknowledged) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Added Product Successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                })
+                                setIsLoading(false)
+                            }
+
+                        })
+                }
+            })
     }
     return (
         <section className='mx-auto'>
@@ -87,7 +145,15 @@ const AddProduct = () => {
                     </div>
 
                     <div className="flex justify-end mt-6">
-                        <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">Add Product</button>
+                        <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">{isLoading ? <span className='flex justify-center'><ColorRing
+                            visible={true}
+                            height="30"
+                            width="30"
+                            ariaLabel="blocks-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="blocks-wrapper"
+                            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+                        /> </span> : "Add Product"}</button>
                     </div>
                 </form>
             </div >

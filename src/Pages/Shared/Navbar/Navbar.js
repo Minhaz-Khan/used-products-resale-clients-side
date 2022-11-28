@@ -44,7 +44,7 @@ const Navbar = () => {
                         <div className="flex items-center mt-4 lg:mt-0">
                             <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
                                 {user && <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                                    <img src={user?.photoURL} className="object-cover w-full h-full" alt="avatar" />
+                                    <img src={user?.photoURL} className="object-cover w-full h-full" alt="avatar" title={user.displayName} />
                                 </div>}
 
                                 <h3 className="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">{user?.displayName}</h3>
