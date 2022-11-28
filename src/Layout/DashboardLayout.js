@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { authContext } from '../Context/AuthProvider';
 import useUserType from '../Hooks/useUserType';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
@@ -11,28 +11,28 @@ const DashboardLayout = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <div className="drawer drawer-mobile w-[1488px] mx-auto mt-10">
+            <div className="drawer drawer-mobile md:w-[1488px] mx-auto ">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content ">
+                <div className="drawer-content pt-10 bg-gray-200">
                     <Outlet></Outlet>
                 </div>
-                <div className="drawer-side">
-                    <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-                        {userType === 'Buyer' && <li><Link to={'/dashboard'}>My Orders</Link></li>}
+                <div className="drawer-side border-l shadow-inner">
+                    <label htmlFor="dashboard-drawer" className="drawer-overlay "></label>
+                    <ul className="menu p-4 w-80  text-base-content">
+                        {userType === 'Buyer' && <li><NavLink to={'/dashboard'}>My Orders</NavLink></li>}
                         {userType === 'Seller' &&
                             <>
-                                <li><Link to={'/dashboard/addproduct'}>Add a Product</Link></li>
-                                <li><Link to={'/'}>My Product</Link></li>
-                                <li><Link to={'/'}>My Buyers</Link></li>
+                                <li><NavLink to={'/dashboard/addproduct'}>Add a Product</NavLink></li>
+                                <li><NavLink to={'/'}>My Product</NavLink></li>
+                                <li><NavLink to={'/'}>My Buyers</NavLink></li>
                             </>
                         }
                         {
                             userType === "Admin" &&
                             <>
-                                <li><Link to={'/'}>All Seller</Link></li>
-                                <li><Link to={'/'}>All Buyer</Link></li>
-                                <li><Link to={'/'}>Reported Items</Link></li>
+                                <li><NavLink to={'/'}>All Seller</NavLink></li>
+                                <li><NavLink to={'/'}>All Buyer</NavLink></li>
+                                <li><NavLink to={'/'}>Reported Items</NavLink></li>
                             </>
                         }
                     </ul>

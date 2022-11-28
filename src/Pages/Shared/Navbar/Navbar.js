@@ -5,13 +5,15 @@ import { authContext } from '../../../Context/AuthProvider';
 const Navbar = () => {
     const { user, logout } = useContext(authContext);
     const [isOpen, setIsOpen] = useState(false);
-    console.log(user);
     return (
         <nav className="relative bg-white shadow dark:bg-gray-800">
             <div className="container px-6 py-4 mx-auto">
                 <div className="lg:flex lg:items-center lg:justify-between">
                     <div className="flex items-center justify-between">
                         <div className="text-xl font-semibold text-gray-700">
+                            <label htmlFor="dashboard-drawer" tabIndex={1} className="btn btn-ghost lg:hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                            </label>
                             <Link className="text-2xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300" href="#">Brand</Link>
                         </div>
 
