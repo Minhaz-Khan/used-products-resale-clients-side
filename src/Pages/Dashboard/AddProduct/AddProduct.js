@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ColorRing } from 'react-loader-spinner';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { authContext } from '../../../Context/AuthProvider';
 
 const AddProduct = () => {
     const { register, handleSubmit } = useForm();
+    const Navigate = useNavigate()
     const { user } = useContext(authContext);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -46,6 +48,7 @@ const AddProduct = () => {
                         categories,
                         discription: data.discription,
                         condition: data.conditionType,
+                        saleStatus: 'Available'
                     }
                     console.log(product);
 
@@ -61,13 +64,15 @@ const AddProduct = () => {
                         .then(addData => {
                             console.log(addData)
                             if (addData.acknowledged) {
+                                setIsLoading(false)
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Added Product Successfully',
                                     showConfirmButton: false,
                                     timer: 1500,
                                 })
-                                setIsLoading(false)
+                                Navigate('/dashboard/myproduct')
+
                             }
 
                         })

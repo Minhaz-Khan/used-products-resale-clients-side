@@ -14,7 +14,7 @@ const MyOrders = () => {
             navigate('/dashboard/addproduct')
         }
         else if (userType === 'Admin') {
-            navigate('/')
+            navigate('/dashboard/allsellers')
         }
     }, [navigate, userType])
 

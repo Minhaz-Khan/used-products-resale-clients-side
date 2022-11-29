@@ -13,7 +13,7 @@ const SellPostCategorie = () => {
         <div>
             <h1>{posts[0].categories}</h1>
             <div className='grid grid-cols-1
-            md:grid-cols-2 lg:grid-cols-3 justify-items-center'>
+            md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-y-10'>
                 {posts.map(post => <PostCart key={post._id} post={post} setModalPost={setModalPost}></PostCart>)}
             </div>
             <div>
