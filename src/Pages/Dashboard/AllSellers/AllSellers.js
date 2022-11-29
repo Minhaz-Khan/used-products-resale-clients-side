@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { Triangle } from 'react-loader-spinner';
+import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { authContext } from '../../../Context/AuthProvider';
 
@@ -20,7 +21,19 @@ const AllSellers = () => {
     })
 
     const handleUserVerified = (id) => {
-
+        fetch(`http://localhost:5000/users/verify/${id}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `baerer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    toast('Verifid Done')
+                    refetch()
+                }
+            })
 
     }
 
@@ -86,7 +99,7 @@ const AllSellers = () => {
                             <th>{i + 1}</th>
                             <td>{seller.name}</td>
                             <td>{seller.email}</td>
-                            <td><button onClick={() => handleUserVerified(seller._id)} className='btn btn-primary btn-sm'>Verified</button></td>
+                            <td>{!seller.verifyStatus && <button onClick={() => handleUserVerified(seller._id)} className='btn btn-primary btn-sm'>Verified</button>}</td>
                             <td><button onClick={() => handleUserDelete(seller._id)} className='btn border-none text-white bg-red-600 btn-sm'>Delete</button></td>
                         </tr>)}
 

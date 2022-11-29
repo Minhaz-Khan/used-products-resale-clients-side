@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const PostCart = ({ post, setModalPost }) => {
-    const { location, modelName, orginalPrice, picture, postTime, resalePrice, sellerName, yearOfUse } = post;
+    const [seller, setSeller] = useState()
+    const { location, modelName, orginalPrice, picture, postTime, resalePrice, sellerName, yearOfUse, sellerEmail } = post;
+    useEffect(() => {
+        fetch(`http://localhost:5000/users/${sellerEmail}`)
+            .then(res => res.json())
+            .then(data => {
+                setSeller(data)
+                console.log(data)
+            });
+    }, [sellerEmail])
     return (
         <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
             <img className="object-cover object-center w-full h-56" src={picture} alt="avatar" />
@@ -12,13 +21,15 @@ const PostCart = ({ post, setModalPost }) => {
                 <h1 className="mx-3 text-lg font-semibold text-white">Model: {modelName}</h1>
             </div>
 
-            <div className="px-6 py-4">
+            <div className="px-6 py-4 relative">
+                {seller?.verifyStatus === 'verified' && <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Eo_circle_light-blue_checkmark.svg/2048px-Eo_circle_light-blue_checkmark.svg.png" alt="" className='absolute right-4 w-4 h-4' />}
                 <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Resale Price:{resalePrice}</h1>
 
                 <p className="py-2 text-gray-700 dark:text-gray-400">Seller: {sellerName} </p>
 
-                <div className='flex'>
-                    <div>
+                <div className='flex '>
+
+                    <div className=''>
                         <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
                             <h1 className="px-2 text-sm"><span className='font-semibold'>Original Price:</span> {orginalPrice}</h1>
                         </div>

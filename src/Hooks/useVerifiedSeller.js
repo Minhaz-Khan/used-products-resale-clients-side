@@ -1,3 +1,0 @@
-const useVerifiedSeller = (email) => {
-
-}
