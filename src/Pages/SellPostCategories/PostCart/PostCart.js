@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { authContext } from '../../../Context/AuthProvider';
 
 const PostCart = ({ post, setModalPost }) => {
-    const [seller, setSeller] = useState()
-    const { location, modelName, orginalPrice, picture, postTime, resalePrice, sellerName, yearOfUse, sellerEmail } = post;
+    const { user } = useContext(authContext)
+    const [seller, setSeller] = useState();
+    const { location, modelName, orginalPrice, picture, postTime, resalePrice, sellerName, yearOfUse, sellerEmail, _id } = post;
     useEffect(() => {
         fetch(`http://localhost:5000/users/${sellerEmail}`)
             .then(res => res.json())
@@ -11,6 +13,22 @@ const PostCart = ({ post, setModalPost }) => {
                 console.log(data)
             });
     }, [sellerEmail])
+
+    const handlewishlist = () => {
+        const wishList = {
+            picture,
+            resalePrice,
+            productId: _id,
+            email: user.email,
+            modelName
+
+        }
+        fetch(`http://localhost:5000/mywishlist`, {
+            method: 'PUT',
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+    }
     return (
         <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
             <img className="object-cover object-center w-full h-56" src={picture} alt="avatar" />
@@ -48,7 +66,10 @@ const PostCart = ({ post, setModalPost }) => {
                         </div>
                     </div>
                 </div>
-                <label htmlFor="Book-modal" className="border-none btn mt-5 w-full  text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mx-2 sm:order-2 sm:w-auto hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" onClick={() => setModalPost(post)}>Book Now</label>
+                <div className='flex justify-center mt-5'>
+                    <label htmlFor="Book-modal" className="border-none btn  w-full  text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mx-2 sm:order-2 sm:w-auto hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" onClick={() => setModalPost(post)}>Book Now</label>
+                    <img onClick={handlewishlist} src="https://toppng.com/uploads/preview/shopping-cart-png-image-shopping-cart-icon-sv-11562865326ta92uix1ak.png" alt="" className='w-8 h-8' />
+                </div>
             </div>
 
 

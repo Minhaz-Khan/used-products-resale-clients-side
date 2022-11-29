@@ -50,7 +50,7 @@ const MyOrders = () => {
 
     return (
         <>
-            {!typeLoading && <div>
+            {!typeLoading && <div className='px-5'>
                 <h1 className='text-4xl font-semibold mb-5'>My Order List</h1>
                 <div className="overflow-x-auto">
                     <table className="table w-full">
