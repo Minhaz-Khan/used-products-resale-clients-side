@@ -7,7 +7,8 @@ import { authContext } from '../../../Context/AuthProvider';
 import useToken from '../../../Hooks/useToken';
 const SignUp = () => {
     const { googlelogin, CreateUser, updateUser } = useContext(authContext)
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [signupError, setSignupError] = useState('')
     const [userEmail, setUserEmail] = useState();
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -77,7 +78,9 @@ const SignUp = () => {
 
                                 })
                         })
-                        .catch(e => console.log(e))
+                        .catch(e => {
+                            setSignupError(e.message)
+                        })
                 }
             })
 
@@ -114,7 +117,7 @@ const SignUp = () => {
 
                     })
             })
-            .catch(e => console.error(e))
+            .catch(e => { setSignupError(e.message) })
     }
     const imageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJS0LvjGTfeS2o4Z0IajCggs5pDgmZSSJmTz5KoFjpffeeaYxypglyv7529E7hOJkOi4g&usqp=CAU'
     return (
@@ -129,7 +132,8 @@ const SignUp = () => {
                     <form className="mt-6" onSubmit={handleSubmit(handleSignUp)}>
                         <div>
                             <label className="block text-start text-sm text-gray-800 dark:text-gray-200">Name</label>
-                            <input {...register('name')} type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            <input {...register('name', { required: 'input your name' })} type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            {errors.name && errors.name.type === 'required' && <p>{errors.name.message}</p>}
                         </div>
                         <div className="form-control w-full">
                             <label className="label">
@@ -143,7 +147,8 @@ const SignUp = () => {
 
                         <div className='mt-4'>
                             <label className="block text-start text-sm text-gray-800 dark:text-gray-200">Email</label>
-                            <input {...register('email')} type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            <input {...register('email', { required: 'input your name' })} type="email" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            {errors.email && errors.email.type === 'required' && <p>{errors.email.message}</p>}
                         </div>
 
 
@@ -153,12 +158,21 @@ const SignUp = () => {
                                 <label className="block text-sm text-gray-800 dark:text-gray-200">Password</label>
                                 <Link href="#" className="text-xs text-gray-600 dark:text-gray-400 hover:underline">Forget Password?</Link>
                             </div>
-                            <input {...register('password')} type="password" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            <input {...register('password', {
+                                required: 'input your password must', minLength: { value: 6, message: 'password must be 6 charecter' }, pattern: {
+                                    value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                                    , message: 'password must be strong'
+                                }
+                            })} type="password" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+
                         </div>
 
                         <div className='flex items-center '>
                             <label className='label'>Image:</label>
-                            <input {...register('image')} type="file" id="" />
+                            <input {...register('image', { required: 'input your photo' })} type="file" id="" />
+                            {errors.password && errors.password.type === 'required' && <p>{errors.password.message}</p>}
+                            {signupError && <p className='text-red-600'>{signupError}</p>}
                         </div>
 
 

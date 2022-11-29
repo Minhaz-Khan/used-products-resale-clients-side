@@ -30,8 +30,8 @@ const DashboardLayout = () => {
                         {
                             userType === "Admin" &&
                             <>
-                                <li><NavLink to={'/dashboard/allseller'}>All Seller</NavLink></li>
-                                <li><NavLink to={'/dashboard/allbuyer'}>All Buyer</NavLink></li>
+                                <li><NavLink to={'/dashboard/allsellers'}>All Seller</NavLink></li>
+                                <li><NavLink to={'/dashboard/allbuyers'}>All Buyer</NavLink></li>
                                 <li><NavLink to={'/dashboard/reporteditem'}>Reported Items</NavLink></li>
                             </>
                         }

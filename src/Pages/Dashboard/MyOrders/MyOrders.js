@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect } from 'react';
 import { Triangle } from 'react-loader-spinner';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { authContext } from '../../../Context/AuthProvider';
 import useUserType from '../../../Hooks/useUserType';
 
@@ -31,6 +31,9 @@ const MyOrders = () => {
             return data
         }
     })
+
+
+
     if (isLoading) {
         return <dir className='h-screen flex justify-center items-center'>
             <Triangle
@@ -70,7 +73,7 @@ const MyOrders = () => {
                                 </div></td>
                                 <td>{order.modelName}</td>
                                 <td>{order.resalePrice}</td>
-                                <td>{!order.payment && <button className='btn btn-sm btn-primary'>Pay</button>}</td>
+                                <td>{!order.payment ? <Link to={`/dashboard/payment/${order._id}`} className='btn btn-sm btn-primary'>Pay</Link> : <p>Payment Done</p>}</td>
                             </tr>)}
                         </tbody>
                     </table>

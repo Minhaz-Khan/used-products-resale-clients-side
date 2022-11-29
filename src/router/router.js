@@ -1,10 +1,13 @@
 import DashboardLayout from "../Layout/DashboardLayout";
 import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
+import AllBuyers from "../Pages/Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/Dashboard/AllSellers/AllSellers";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
 import MyProduct from "../Pages/Dashboard/MyProduct/MyProduct";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 import Home from "../Pages/Home/Home/Home";
 import SellPostCategorie from "../Pages/SellPostCategories/SellPostCategorie/SellPostCategorie";
+import ErrorPage from "../Pages/Shared/ErrorPage/ErrorPage";
 import Login from "../Pages/User/Login/Login";
 import SignUp from "../Pages/User/SignUp/SignUp";
 import AdminRoute from "../PrivetRoutes/AdminRoute";
@@ -18,6 +21,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -45,6 +49,7 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <AdminRoute><DashboardLayout></DashboardLayout></AdminRoute>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/dashboard',
@@ -61,6 +66,19 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/allsellers',
                 element: <AdminRoute><AllSellers></AllSellers></AdminRoute>
+            },
+            {
+                path: '/dashboard/allbuyers',
+                element: <AdminRoute><AllBuyers></AllBuyers></AdminRoute>
+            },
+            {
+                path: '/dashboard/payment/:id',
+                element: <AdminRoute><Payment></Payment></AdminRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`, {
+                    headers: {
+                        authorization: `baerer ${localStorage.getItem('accessToken')}`
+                    }
+                })
             }
         ]
     }

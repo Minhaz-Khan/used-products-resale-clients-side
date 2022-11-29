@@ -49,11 +49,25 @@ const MyProduct = () => {
 
             }
         })
+    }
 
-
-
+    const handleUnsold = (id) => {
+        fetch(`http://localhost:5000/myproduct/${id}`, {
+            method: "PUT",
+            headers: {
+                authorization: `baerer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                refetch()
+            })
 
     }
+
+
+
     if (isLoading) {
         <dir className='h-screen flex justify-center items-center'>
             <Triangle
@@ -112,9 +126,9 @@ const MyProduct = () => {
                                     <br />
                                     <span className="badge badge-ghost badge-sm">{product.resalePrice}</span>
                                 </td>
-                                <td>{product.saleStatus}</td>
+                                <td>{product?.status ? <p>advertice</p> : <p>Avilable</p>}</td>
                                 <th>
-                                    <button className="btn btn-primary btn-sm">Unsold</button>
+                                    {!product?.status ? <button onClick={() => handleUnsold(product._id)} className="btn btn-primary btn-sm">Unsold</button> : <p>already advirtice</p>}
                                 </th>
                                 <th>
                                     <button onClick={() => handleDeleteProduct(product._id)} className="btn btn-sm bg-red-600 border-none text-white  btn-xs">delete</button>

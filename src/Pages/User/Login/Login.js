@@ -10,19 +10,23 @@ const Login = () => {
     const { googlelogin, Signin, fogetPass } = useContext(authContext)
     const navigate = useNavigate()
     const location = useLocation();
+    const [loginError, setLoginError] = useState('')
     const from = location.state?.from?.pathname || '/';
     const [userEmail, setUserEmail] = useState('')
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const token = useToken(userEmail)
     if (token) {
         navigate(from, { replace: true })
     }
-    const handleSignUp = (data) => {
+    const handleLogin = (data) => {
         Signin(data.email, data.password)
             .then(result => {
                 setUserEmail(data.email)
             })
-            .catch(e => console.log(e))
+            .catch(e => {
+                setLoginError(e.message)
+                console.log(e)
+            })
     }
 
     const handleGoogleLogin = () => {
@@ -57,7 +61,10 @@ const Login = () => {
                     })
                 setUserEmail(user.email)
             })
-            .catch(e => console.error(e))
+            .catch(e => {
+                setLoginError(e.message)
+                console.error(e)
+            })
     }
     const [onEmail, setOnEmail] = useState();
     const handleForget = () => {
@@ -78,20 +85,24 @@ const Login = () => {
                 <div className="w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
                     <h1 className="text-3xl font-semibold text-center text-gray-700 dark:text-white">Login</h1>
 
-                    <form className="mt-6" onClick={handleSubmit(handleSignUp)}>
+                    <form className="mt-6" onClick={handleSubmit(handleLogin)}>
 
-                        <div className='mt-4'>
+                        <div className='mt-4 form-control'>
                             <label className="block text-start text-sm text-gray-800 dark:text-gray-200">Username</label>
-                            <input {...register('email', { onBlur: (e => setOnEmail(e.target.value)) })} type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            <input {...register('email', { required: true, onBlur: (e => setOnEmail(e.target.value)) })} aria-invalid={errors.email ? "true" : "false"} type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            {errors.email?.type === 'required' && <p role="alert">Email is required</p>}
                         </div>
 
 
-                        <div className="mt-4">
+                        <div className="mt-4 form-control">
                             <div className="flex items-center justify-between">
                                 <label className="block text-sm text-gray-800 dark:text-gray-200">Password</label>
                                 <Link onClick={handleForget} className="text-xs text-gray-600 dark:text-gray-400 hover:underline">Forget Password?</Link>
                             </div>
-                            <input {...register('password')} type="password" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            <input {...register('password', { required: 'input your password must', minLength: 6 })} type="password" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
+                            {errors.password && errors.password.type === 'required' && <p>{errors.password.message}</p>}
+                            {errors.password && errors.password.type === 'minLength' && <p>Password must be 6 chrecter</p>}
+                            {loginError && <p>{loginError}</p>}
                         </div>
 
 

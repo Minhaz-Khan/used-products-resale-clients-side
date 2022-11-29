@@ -4,12 +4,12 @@ import { Triangle } from 'react-loader-spinner';
 import Swal from 'sweetalert2';
 import { authContext } from '../../../Context/AuthProvider';
 
-const AllSellers = () => {
+const AllBuyers = () => {
     const { user } = useContext(authContext)
-    const { data: allSellers, isLoading, refetch } = useQuery({
+    const { data: allBuyers, isLoading, refetch } = useQuery({
         queryKey: ['users/allseller'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users/allseller?email=${user.email}`, {
+            const res = await fetch(`http://localhost:5000/users/allbuyer?email=${user.email}`, {
                 headers: {
                     authorization: `baerer ${localStorage.getItem('accessToken')}`
                 }
@@ -19,15 +19,10 @@ const AllSellers = () => {
         }
     })
 
-    const handleUserVerified = (id) => {
-
-
-    }
-
     const handleUserDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
-            text: "Delete This Seller",
+            text: "Delete this Buyer!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -69,7 +64,7 @@ const AllSellers = () => {
     }
     return (
         <div>
-            <h1>all Sellers</h1>
+            <h1>all Buyers</h1>
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
@@ -77,17 +72,15 @@ const AllSellers = () => {
                             <th></th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Make Verfied</th>
                             <th>Delete Seller</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {allSellers?.map((seller, i) => <tr key={seller._id}>
+                        {allBuyers?.map((buyer, i) => <tr key={buyer._id}>
                             <th>{i + 1}</th>
-                            <td>{seller.name}</td>
-                            <td>{seller.email}</td>
-                            <td><button onClick={() => handleUserVerified(seller._id)} className='btn btn-primary btn-sm'>Verified</button></td>
-                            <td><button onClick={() => handleUserDelete(seller._id)} className='btn border-none text-white bg-red-600 btn-sm'>Delete</button></td>
+                            <td>{buyer.name}</td>
+                            <td>{buyer.email}</td>
+                            <td><button onClick={() => handleUserDelete(buyer._id)} className='btn border-none text-white bg-red-600 btn-sm'>Delete</button></td>
                         </tr>)}
 
                     </tbody>
@@ -97,4 +90,4 @@ const AllSellers = () => {
     );
 };
 
-export default AllSellers;
+export default AllBuyers;
