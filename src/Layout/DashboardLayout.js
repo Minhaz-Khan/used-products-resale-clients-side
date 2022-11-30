@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { authContext } from '../Context/AuthProvider';
 import useUserType from '../Hooks/useUserType';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
@@ -19,20 +19,23 @@ const DashboardLayout = () => {
                 <div className="drawer-side border-l shadow-inner">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay "></label>
                     <ul className="menu p-4 w-80  text-base-content">
-                        {userType === 'Buyer' && <li><NavLink to={'/dashboard'}>My Orders</NavLink></li>}
+                        {userType === 'Buyer' && <><li>
+                            <Link to={'/dashboard'}>My Orders</Link></li>
+                            <li> <Link to={'/dashboard/mywishlist'}>My Wishlist</Link></li>
+                        </>}
                         {userType === 'Seller' &&
                             <>
-                                <li><NavLink to={'/dashboard/addproduct'}>Add a Product</NavLink></li>
-                                <li><NavLink to={'/dashboard/myproduct'}>My Product</NavLink></li>
-                                <li><NavLink to={'/'}>My Buyers</NavLink></li>
+                                <li><Link to={'/dashboard/addproduct'}>Add a Product</Link></li>
+                                <li><Link to={'/dashboard/myproduct'}>My Product</Link></li>
+                                <li><Link to={'/'}>My Buyers</Link></li>
                             </>
                         }
                         {
                             userType === "Admin" &&
                             <>
-                                <li><NavLink to={'/dashboard/allsellers'}>All Seller</NavLink></li>
-                                <li><NavLink to={'/dashboard/allbuyers'}>All Buyer</NavLink></li>
-                                <li><NavLink to={'/dashboard/reporteditem'}>Reported Items</NavLink></li>
+                                <li><Link to={'/dashboard/allsellers'}>All Seller</Link></li>
+                                <li><Link to={'/dashboard/allbuyers'}>All Buyer</Link></li>
+                                <li><Link to={'/dashboard/reporteditem'}>Reported Items</Link></li>
                             </>
                         }
                     </ul>

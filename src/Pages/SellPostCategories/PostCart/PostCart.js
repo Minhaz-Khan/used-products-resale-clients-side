@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { authContext } from '../../../Context/AuthProvider';
+import { ShoppingCartIcon } from '@heroicons/react/24/solid'
+import { toast } from 'react-toastify';
 
 const PostCart = ({ post, setModalPost }) => {
     const { user } = useContext(authContext)
@@ -25,18 +27,26 @@ const PostCart = ({ post, setModalPost }) => {
         }
         fetch(`http://localhost:5000/mywishlist`, {
             method: 'PUT',
+            headers: {
+                'content-type': 'application/json',
+                authorization: `baerer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(wishList)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                toast('Add To wishlist')
+            })
     }
     return (
         <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
             <img className="object-cover object-center w-full h-56" src={picture} alt="avatar" />
 
-            <div className="flex items-center px-6 py-3 bg-gray-900">
+            <div className="flex justify-between items-center px-6 py-3 bg-gray-900">
 
 
                 <h1 className="mx-3 text-lg font-semibold text-white">Model: {modelName}</h1>
+                <ShoppingCartIcon onClick={handlewishlist} className='w-5 cursor-pointer text-white'></ShoppingCartIcon>
             </div>
 
             <div className="px-6 py-4 relative">
@@ -67,8 +77,8 @@ const PostCart = ({ post, setModalPost }) => {
                     </div>
                 </div>
                 <div className='flex justify-center mt-5'>
+
                     <label htmlFor="Book-modal" className="border-none btn  w-full  text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mx-2 sm:order-2 sm:w-auto hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" onClick={() => setModalPost(post)}>Book Now</label>
-                    <img onClick={handlewishlist} src="https://toppng.com/uploads/preview/shopping-cart-png-image-shopping-cart-icon-sv-11562865326ta92uix1ak.png" alt="" className='w-8 h-8' />
                 </div>
             </div>
 

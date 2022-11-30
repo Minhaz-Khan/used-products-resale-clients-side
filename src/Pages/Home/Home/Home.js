@@ -7,7 +7,7 @@ import MostPopularCar from '../MostPopularCar/MostPopularCar';
 import axios from "axios";
 
 const Home = () => {
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:5000/myproduct/advertis')
             .then((response) => { setPost(response.data) })
@@ -17,9 +17,12 @@ const Home = () => {
     return (
         <div >
             <HomeBanner></HomeBanner>
-            <Advertisement post={post}></Advertisement>
-            <MostPopularCar></MostPopularCar>
+            <div className=' mt-10 grid grid-cols-2 bg-slate-100'>
+                <div className='flex justify-center items-center '><h2 className='text-4xl font-bold'>Exclusive Product</h2></div>
+                <Advertisement post={post}></Advertisement>
+            </div>
             <CarCategory></CarCategory>
+            <MostPopularCar></MostPopularCar>
         </div>
     )
 };

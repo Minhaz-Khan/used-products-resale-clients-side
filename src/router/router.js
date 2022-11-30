@@ -4,6 +4,7 @@ import AllBuyers from "../Pages/Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/Dashboard/AllSellers/AllSellers";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
 import MyProduct from "../Pages/Dashboard/MyProduct/MyProduct";
+import MyWishlist from "../Pages/Dashboard/MyWishlist/MyWishlist";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import Home from "../Pages/Home/Home/Home";
 import SellPostCategorie from "../Pages/SellPostCategories/SellPostCategorie/SellPostCategorie";
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
                         authorization: `baerer ${localStorage.getItem('accessToken')}`
                     }
                 })
+            },
+            {
+                path: '/dashboard/mywishlist',
+                element: <AdminRoute><MyWishlist></MyWishlist></AdminRoute>
             }
         ]
     }
