@@ -17,8 +17,8 @@ const Home = () => {
     return (
         <div >
             <HomeBanner></HomeBanner>
-            <div className=' mt-10 grid grid-cols-2 bg-slate-100'>
-                <div className='flex justify-center items-center '><h2 className='text-4xl font-bold'>Exclusive Product</h2></div>
+            <div className=' mt-10 grid grid-cols-1 md:grid-cols-2 bg-slate-100'>
+                <div className='flex justify-center items-center md:py-0 py-10'><h2 className='text-4xl font-bold'>Exclusive Product</h2></div>
                 <Advertisement post={post}></Advertisement>
             </div>
             <CarCategory></CarCategory>

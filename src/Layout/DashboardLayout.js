@@ -16,7 +16,7 @@ const DashboardLayout = () => {
                 <div className="drawer-content pt-10 bg-gray-200">
                     <Outlet></Outlet>
                 </div>
-                <div className="drawer-side border-l shadow-inner">
+                <div className="drawer-side border-l shadow-inner ">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay "></label>
                     <ul className="menu p-4 w-80  text-base-content">
                         {userType === 'Buyer' && <><li>

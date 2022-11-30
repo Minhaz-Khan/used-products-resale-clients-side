@@ -3,15 +3,15 @@ import teslaCar from '../../../Final Froject image/Electric-Car-PNG-Image-Backgr
 
 const MostPopularCar = () => {
     return (
-        <div className='mt-5'>
+        <div className='mt-10'>
             <h1 className='text-4xl uppercase'>Welcome To Our</h1>
             <h1 className='text-4xl font-black uppercase'>CarClub</h1>
-            <div className='grid grid-cols-2 mt-10'>
+            <div className='grid grid-cols-1 md:grid-cols-2 mt-10'>
                 <div className='flex justify-end'>
-                    <img src={teslaCar} alt="" className='w-10/12' />
+                    <img src={teslaCar} alt="" className='lg:w-10/12' />
                 </div>
-                <div className='flex  items-center '>
-                    <div className='w-1/2 text-left'>
+                <div className='flex items-center px-5'>
+                    <div className='lg:w-1/2 lg:text-left '>
                         <h3 className='text-3xl'>MEET OUR</h3>
                         <h3 className='text-3xl'>CAR CLUB SINCE 1892</h3>
                         <h5 className='text-lg'>USED CAR BIG STORE</h5>

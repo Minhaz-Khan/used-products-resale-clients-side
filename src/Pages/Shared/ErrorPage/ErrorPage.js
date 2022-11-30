@@ -1,9 +1,11 @@
-import React from 'react';
-import { Link, useRouteError } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { useRouteError } from 'react-router-dom';
+import { authContext } from '../../../Context/AuthProvider';
 import './ErrorPage.css'
 
 const ErrorPage = () => {
     const error = useRouteError();
+    const { logout } = useContext(authContext);
     return (
         <section className='w-full h-screen flex justify-center items-center'>
             <div class="page_404 w-full flex justify-center">
@@ -24,7 +26,7 @@ const ErrorPage = () => {
 
                                     <p>{error.statusText || error.message}</p>
 
-                                    <Link to={'/'} class="link_404">Go to Home</Link>
+                                    <button onClick={() => logout()} className="link_404">Sign Out</button>
                                 </div>
                             </div>
                         </div>
