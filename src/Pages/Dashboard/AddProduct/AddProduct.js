@@ -52,7 +52,7 @@ const AddProduct = () => {
                     }
                     console.log(product);
 
-                    fetch(`http://localhost:5000/addProduct?email=${user.email}`, {
+                    fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/addProduct?email=${user.email}`, {
                         method: "POST",
                         headers: {
                             'content-type': 'application/json',

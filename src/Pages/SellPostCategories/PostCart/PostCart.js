@@ -8,7 +8,7 @@ const PostCart = ({ post, setModalPost }) => {
     const [seller, setSeller] = useState();
     const { location, modelName, orginalPrice, picture, postTime, resalePrice, sellerName, yearOfUse, sellerEmail, _id } = post;
     useEffect(() => {
-        fetch(`http://localhost:5000/users/${sellerEmail}`)
+        fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/users/${sellerEmail}`)
             .then(res => res.json())
             .then(data => {
                 setSeller(data)
@@ -25,7 +25,7 @@ const PostCart = ({ post, setModalPost }) => {
             modelName
 
         }
-        fetch(`http://localhost:5000/mywishlist`, {
+        fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/mywishlist`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json',

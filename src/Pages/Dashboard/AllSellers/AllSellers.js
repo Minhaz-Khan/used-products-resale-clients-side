@@ -10,7 +10,7 @@ const AllSellers = () => {
     const { data: allSellers, isLoading, refetch } = useQuery({
         queryKey: ['users/allseller'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users/allseller?email=${user.email}`, {
+            const res = await fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/users/allseller?email=${user.email}`, {
                 headers: {
                     authorization: `baerer ${localStorage.getItem('accessToken')}`
                 }
@@ -21,7 +21,7 @@ const AllSellers = () => {
     })
 
     const handleUserVerified = (id) => {
-        fetch(`http://localhost:5000/users/verify/${id}`, {
+        fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/users/verify/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `baerer ${localStorage.getItem('accessToken')}`
@@ -48,7 +48,7 @@ const AllSellers = () => {
             confirmButtonText: 'Delete'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/users/${id}`, {
+                fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/users/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

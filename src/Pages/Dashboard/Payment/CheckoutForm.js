@@ -12,7 +12,7 @@ const CheckoutForm = ({ booking }) => {
     const [transactionID, setTransactionID] = useState('')
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("/create-payment-intent", {
+        fetch("http://localhost:5000/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ price: resalePrice }),
@@ -47,6 +47,7 @@ const CheckoutForm = ({ booking }) => {
         }
         setProsess(true)
         const { paymentIntent, error: confiremError } = await stripe.confirmCardPayment(
+            clientSecret,
             {
                 payment_method: {
                     card: card,
@@ -59,6 +60,7 @@ const CheckoutForm = ({ booking }) => {
         )
         if (confiremError) {
             setCardError(confiremError)
+            setProsess(false)
             return;
         }
         if (confiremError) {

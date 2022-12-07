@@ -39,7 +39,7 @@ const Login = () => {
                     image: user.photoURL,
                     userType: 'Buyer'
                 }
-                fetch(`http://localhost:5000/users`, {
+                fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/users`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'

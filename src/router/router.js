@@ -1,4 +1,5 @@
 import DashboardLayout from "../Layout/DashboardLayout";
+import Blog from "../Pages/Blog/Blog";
 import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
 import AllBuyers from "../Pages/Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/Dashboard/AllSellers/AllSellers";
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
             {
                 path: '/sellpostcategorie/:id',
                 element: <PrivetRoute><SellPostCategorie></SellPostCategorie></PrivetRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/carspost/${params.id}`, {
+                loader: ({ params }) => fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/carspost/${params.id}`, {
                     headers: {
                         authorization: `baerer ${localStorage.getItem('accessToken')}`
                     }
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <SignUp></SignUp>
+            },
+            {
+                path: '/blog',
+                element: <Blog></Blog>
             }
         ]
     },
@@ -75,7 +80,7 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/payment/:id',
                 element: <AdminRoute><Payment></Payment></AdminRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`, {
+                loader: ({ params }) => fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/bookings/${params.id}`, {
                     headers: {
                         authorization: `baerer ${localStorage.getItem('accessToken')}`
                     }

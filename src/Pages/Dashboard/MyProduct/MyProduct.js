@@ -9,7 +9,7 @@ const MyProduct = () => {
     const { data: products, isLoading, refetch } = useQuery({
         queryKey: ['myproduct'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/myproduct?email=${user.email}`, {
+            const res = await fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/myproduct?email=${user.email}`, {
                 headers: {
                     authorization: `baerer ${localStorage.getItem('accessToken')}`
                 }
@@ -29,7 +29,7 @@ const MyProduct = () => {
             confirmButtonText: 'Delete'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/myproduct/${id}`, {
+                fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/myproduct/${id}`, {
                     method: 'DELETE',
                     headers: {
                         authorization: `baerer ${localStorage.getItem('accessToken')}`
@@ -52,7 +52,7 @@ const MyProduct = () => {
     }
 
     const handleUnsold = (id) => {
-        fetch(`http://localhost:5000/myproduct/${id}`, {
+        fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/myproduct/${id}`, {
             method: "PUT",
             headers: {
                 authorization: `baerer ${localStorage.getItem('accessToken')}`

@@ -45,7 +45,7 @@ const SignUp = () => {
                     CreateUser(email, password)
                         .then(result => {
 
-                            fetch(`http://localhost:5000/users`, {
+                            fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/users`, {
                                 method: "POST",
                                 headers: {
                                     'content-type': 'application/json'
@@ -97,7 +97,7 @@ const SignUp = () => {
                     image: user.photoURL,
                     userType: 'Buyer'
                 }
-                fetch(`http://localhost:5000/users`, {
+                fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/users`, {
                     method: "POST",
                     headers: {
                         'content-type': 'application/json'

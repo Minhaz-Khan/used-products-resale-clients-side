@@ -9,7 +9,7 @@ import axios from "axios";
 const Home = () => {
     const [post, setPost] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:5000/myproduct/advertis')
+        axios.get('https://used-products-resale-server-side-minhaz-khan.vercel.app/myproduct/advertis')
             .then((response) => { setPost(response.data) })
     }, [])
     console.log(post);

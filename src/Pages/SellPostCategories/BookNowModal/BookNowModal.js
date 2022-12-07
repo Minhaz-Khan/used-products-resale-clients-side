@@ -21,7 +21,7 @@ const BookNowModal = ({ modalPost, setModalPost }) => {
             meetingLocation: location,
 
         }
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://used-products-resale-server-side-minhaz-khan.vercel.app/bookings', {
             method: "POST",
             headers: {
                 'content-type': 'application/json',

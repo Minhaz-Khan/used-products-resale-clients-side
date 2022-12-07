@@ -22,7 +22,7 @@ const MyOrders = () => {
     const { data: orders, isLoading } = useQuery({
         queryKey: ['bookings'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/bookings?email=${user.email}`, {
+            const res = await fetch(`https://used-products-resale-server-side-minhaz-khan.vercel.app/bookings?email=${user.email}`, {
                 headers: {
                     authorization: `baerer ${localStorage.getItem('accessToken')}`
                 }

@@ -4,7 +4,7 @@ import CartCarCategories from './CartCarCategories';
 const CarCategory = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/categories')
+        fetch('https://used-products-resale-server-side-minhaz-khan.vercel.app/categories')
             .then(res => res.json())
             .then(data => setCategories(data))
     }, [])
